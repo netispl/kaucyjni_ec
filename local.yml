@@ -52,7 +52,7 @@
         state: present
         force: yes
         update_cache: yes
-      when: when: ver_df_daemon.stdout != '2.1.340m10r20251211070736'
+      when: ver_df_daemon.stdout != '2.1.340m10r20251211070736'
       register: upgrade_df_daemon
       environment: "{{ proxy_env }}"
 
