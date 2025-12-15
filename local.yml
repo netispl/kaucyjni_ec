@@ -1,0 +1,126 @@
+- hosts: localhost
+
+  vars:
+
+    proxy_env:
+      PATH: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+      TERM: xterm-256color
+      SHELL: /bin/bash
+
+  tasks:
+
+    - name: wersja kasnet
+      shell: mysql -N -e "select wartosc from KasyUstawienia where parametr='Wersja' order by czas desc limit 1;" kasa
+      register: ver_df_daemon
+      environment: "{{ proxy_env }}"
+
+    - name: wersja xkasnet
+      shell: mysql -N -e "select wartosc from KasyUstawienia where parametr='Klient.Wersja' order by czas desc limit 1;" kasa
+      register: ver_xkasnet
+      environment: "{{ proxy_env }}"
+
+    - name: unhold paczek xkasnet'a
+      shell: |
+          sudo apt-mark unhold $(apt-mark showhold)
+      args:
+        executable: /bin/bash
+      environment: "{{ proxy_env }}"
+      ignore_errors: yes
+
+    - name:  Instalacja paczek xkasnet bionic
+      apt:
+        name:
+          - xkasnet-client-2.2.22=2.2.22r202512121316~bionic-1
+          - xkasnet-client-ec-2.2.22=2.2.22r202512121316~bionic-1
+          - xkasnet-libnative-jni-2.2.22=2.2.22r202512121316~bionic-1
+        state: present
+        force: yes
+        update_cache: yes
+      when: ver_xkasnet.stdout != '2.2.22r202512121316'
+      register: upgrade_xkasnet
+      environment: "{{ proxy_env }}"
+
+    - name:  Instalacja paczek kasnet bionic
+      apt:
+        name:
+          - kasnet-config-kasa-2.1.340-m10=2.1.340m10r20251211070736~bionic-1
+          - kasnet-libwaga-kasa-2.1.340-m10=2.1.340m10r20251211070736~bionic-1
+          - kasnet-monitor-kasa-2.1.340-m10=2.1.340m10r20251211070736~bionic-1
+          - kasnet-server-kasa-2.1.340-m10=2.1.340m10r20251211070736~bionic-1
+          - kasnet-src-kasa-2.1.340-m10=2.1.340m10r20251211070736~bionic-1
+          - kasnet-tools-kasa-2.1.340-m10=2.1.340m10r20251211070736~bionic-1
+        state: present
+        force: yes
+        update_cache: yes
+      when: when: ver_df_daemon.stdout != '2.1.340m10r20251211070736'
+      register: upgrade_df_daemon
+      environment: "{{ proxy_env }}"
+
+    - name: CONFIG  Surface
+      replace:
+        path: '/home/kasa/CONFIG'
+        regexp: '{{ item.regexp }}'
+        replace: '{{ item.line }}'
+        backup: yes
+      with_items:
+        - { regexp: '^kasa.*$', line: 'kasa.config-1700x1200-ecabc-replacement' }
+      when: ansible_product_name == 'Surface Go' 
+
+    - name: CONFIG Quant
+      replace:
+        path: '/home/kasa/CONFIG'
+        regexp: '{{ item.regexp }}'
+        replace: '{{ item.line }}'
+        backup: yes
+      with_items:
+        - { regexp: '^kasa.*$', line: 'kasa.config-964x768-replacement' }
+      when: ansible_product_name == 'PT3200'
+
+    - name: haszowanie 
+      shell: |
+         perl -p -i -e 's;^menu4.el7.index=262;#menu4.el7.index=262;' /home/xkasnet/konfiguracja/.local
+         perl -p -i -e 's;^menu4.el7.image=EC_promolist.png;#menu4.el7.image=EC_promolist.png;' /home/xkasnet/konfiguracja/.local
+
+    - name: config local 
+      blockinfile:
+        owner: user
+        group: user
+        marker: "## {mark}"
+        path: '/home/xkasnet/konfiguracja/.local'
+        block: |
+         #rabat
+         app.opt.singleItemDiscounter.active=true
+         app.opt.singleItemDiscounter.calculateAfterEachProduct=true
+      no_log: true
+
+    - name: tabele
+      shell: |
+         echo 'insert into BazaFormPlatnosciWyswietlana (idPlat, nazwa, typ, flaga) values(113, "Bon za opakowania",3,524288);' | mysql kasa
+         echo 'insert into WplatyWyplatyTypy values(20,"Wyplata bon system kaucyjny", "",1,0,1,20,0,0,0,0,0,0,"",now());' | mysql kasa
+      args:
+        executable: /bin/bash
+      environment: "{{ proxy_env }}"
+      ignore_errors: yes
+
+
+    - name: Usuwam .cache
+      file:
+        state: absent
+        path: '/home/xkasnet/.cache'
+      ignore_errors: yes
+
+    - name: Usuwam .cache 2
+      shell: |
+         rm -rf /home/xkasnet/.cache/*
+      ignore_errors: yes
+
+    - name: Zmieniam ownera na xkasnet
+      file:
+        path: /home/xkasnet
+        state: directory
+        recurse: yes
+        owner: user
+        group: user
+      ignore_errors: yes
+
+
