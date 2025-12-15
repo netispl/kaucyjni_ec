@@ -85,7 +85,7 @@
       blockinfile:
         owner: user
         group: user
-        marker: "## {mark}"
+        marker: "## {mark} RABAT"
         path: '/home/xkasnet/konfiguracja/.local'
         block: |
          #rabat
