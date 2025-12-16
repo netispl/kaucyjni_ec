@@ -73,7 +73,7 @@
         replace: '{{ item.line }}'
         backup: yes
       with_items:
-        - { regexp: '^kasa.*$', line: 'kasa.config-964x768-replacement' }
+        - { regexp: '^kasa.*$', line: 'kasa.config-964x768-ecabc-replacement' }
       when: ansible_product_name == 'PT3200'
 
     - name: haszowanie 
