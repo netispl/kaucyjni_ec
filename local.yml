@@ -81,7 +81,32 @@
          perl -p -i -e 's;^menu4.el7.index=262;#menu4.el7.index=262;' /home/xkasnet/konfiguracja/.local
          perl -p -i -e 's;^menu4.el7.image=EC_promolist.png;#menu4.el7.image=EC_promolist.png;' /home/xkasnet/konfiguracja/.local
 
+
+
     - name: config local 
+      blockinfile:
+        owner: user
+        group: user
+        marker: "## {mark} kaucja"
+        path: '/home/xkasnet/konfiguracja/.local'
+        block: |
+         #kaucja
+         app.returnablePackaging.driver=comp
+         rvm.item1.class=pl.netis.rvm.dao.ReturnablePackagingRVMDao
+         app.compPackaging.url=https://drs-api-r1.compstar.pl
+         depositPayment.item1.name=Got\u00C3\u00B3wka
+         depositPayment.item1.paymentId=21
+         depositPayment.item1.type=21
+         depositPayment.item1.description=Wyplata za kaucje gotowka
+         depositPayment.item1.cash=1
+         depositPayment.item2.name=bon za kaucje
+         depositPayment.item2.paymentId=20
+         depositPayment.item2.type=21
+         depositPayment.item2.description=Bon za kaucje
+         depositPayment.item2.cash=0
+      no_log: true
+
+    - name: config local1 
       blockinfile:
         owner: user
         group: user
@@ -97,6 +122,7 @@
       shell: |
          echo 'insert into BazaFormPlatnosciWyswietlana (idPlat, nazwa, typ, flaga) values(113, "Bon za opakowania",3,524288);' | mysql kasa
          echo 'insert into WplatyWyplatyTypy values(20,"Wyplata bon system kaucyjny", "",1,0,1,20,0,0,0,0,0,0,"",now());' | mysql kasa
+         echo 'insert into WplatyWyplatyTypy values(21,"Wyplata gotĂwka system kaucyjny", "",1,0,1,20,0,0,0,0,0,0,"",now());' | mysql kasa
       args:
         executable: /bin/bash
       environment: "{{ proxy_env }}"
