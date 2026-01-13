@@ -122,7 +122,7 @@
       shell: |
          echo 'insert into BazaFormPlatnosciWyswietlana (idPlat, nazwa, typ, flaga) values(113, "Bon za opakowania",3,524288);' | mysql kasa
          echo 'insert into WplatyWyplatyTypy values(20,"Wyplata bon system kaucyjny", "",1,0,1,20,0,0,0,0,0,0,"",now());' | mysql kasa
-         echo 'insert into WplatyWyplatyTypy values(21,"Wyplata gotĂwka system kaucyjny", "",1,0,1,20,0,0,0,0,0,0,"",now());' | mysql kasa
+         echo 'insert into WplatyWyplatyTypy values(21,"Wyplata gotowka system kaucyjny", "",1,0,1,20,0,0,0,0,0,0,"",now());' | mysql kasa
       args:
         executable: /bin/bash
       environment: "{{ proxy_env }}"
