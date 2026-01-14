@@ -30,13 +30,13 @@
     - name:  Instalacja paczek xkasnet bionic
       apt:
         name:
-          - xkasnet-client-2.2.22=2.2.22r202512171440~bionic-1
-          - xkasnet-client-ec-2.2.22=2.2.22r202512171440~bionic-1
-          - xkasnet-libnative-jni-2.2.22=2.2.22r202512171440~bionic-1
+          - xkasnet-client-2.2.22=2.2.22r202601140900~bionic-1
+          - xkasnet-client-ec-2.2.22=2.2.22r202601140900~bionic-1
+          - xkasnet-libnative-jni-2.2.22=2.2.22r202601140900~bionic-1
         state: present
         force: yes
         update_cache: yes
-      when: ver_xkasnet.stdout != '2.2.22r202512171440'
+      when: ver_xkasnet.stdout != '2.2.22r202601140900'
       register: upgrade_xkasnet
       environment: "{{ proxy_env }}"
 
