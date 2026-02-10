@@ -129,16 +129,16 @@
       ignore_errors: yes
 
 
-    - name: Usuwam .cache
-      file:
-        state: absent
-        path: '/home/xkasnet/.cache'
-      ignore_errors: yes
-
-    - name: Usuwam .cache 2
-      shell: |
-         rm -rf /home/xkasnet/.cache/*
-      ignore_errors: yes
+        #    - name: Usuwam .cache
+        #      file:
+        #        state: absent
+        #        path: '/home/xkasnet/.cache'
+        #      ignore_errors: yes
+        #
+        #    - name: Usuwam .cache 2
+        #      shell: |
+        #         rm -rf /home/xkasnet/.cache/*
+        #      ignore_errors: yes
 
     - name: Zmieniam ownera na xkasnet
       file:
