@@ -83,40 +83,40 @@
 
 
 
-         #    - name: config local 
-         #      blockinfile:
-         #        owner: user
-         #        group: user
-         #        marker: "## {mark} kaucja"
-         #        path: '/home/xkasnet/konfiguracja/.local'
-         #        block: |
-         #         #kaucja
-         #         app.returnablePackaging.driver=comp
-         #         rvm.item1.class=pl.netis.rvm.dao.ReturnablePackagingRVMDao
-         #         app.compPackaging.url=https://drs-api-r1.compstar.pl
-         #         depositPayment.item1.name=Got\u00C3\u00B3wka
-         #         depositPayment.item1.paymentId=21
-         #         depositPayment.item1.type=20
-         #         depositPayment.item1.description=Wyplata za kaucje gotowka
-         #         depositPayment.item1.cash=1
-         #         depositPayment.item2.name=bon za kaucje
-         #         depositPayment.item2.paymentId=20
-         #         depositPayment.item2.type=20
-         #         depositPayment.item2.description=Bon za kaucje
-         #         depositPayment.item2.cash=0
-         #      no_log: true
-         #
-         #    - name: config local1 
-         #      blockinfile:
-         #        owner: user
-         #        group: user
-         #        marker: "## {mark} RABAT"
-         #        path: '/home/xkasnet/konfiguracja/.local'
-         #        block: |
-         #         #rabat
-         #         app.opt.singleItemDiscounter.active=true
-         #         app.opt.singleItemDiscounter.calculateAfterEachProduct=true
-         #      no_log: true
+    - name: config local 
+      blockinfile:
+        owner: user
+        group: user
+        marker: "## {mark} kaucja"
+        path: '/home/xkasnet/konfiguracja/.local'
+        block: |
+         #kaucja
+         app.returnablePackaging.driver=comp
+         rvm.item1.class=pl.netis.rvm.dao.ReturnablePackagingRVMDao
+         app.compPackaging.url=https://drs-api-r1.compstar.pl
+         depositPayment.item1.name=Got\u00C3\u00B3wka
+         depositPayment.item1.paymentId=21
+         depositPayment.item1.type=20
+         depositPayment.item1.description=Wyplata za kaucje gotowka
+         depositPayment.item1.cash=1
+         depositPayment.item2.name=bon za kaucje
+         depositPayment.item2.paymentId=20
+         depositPayment.item2.type=20
+         depositPayment.item2.description=Bon za kaucje
+         depositPayment.item2.cash=0
+      no_log: true
+
+    - name: config local1 
+      blockinfile:
+        owner: user
+        group: user
+        marker: "## {mark} RABAT"
+        path: '/home/xkasnet/konfiguracja/.local'
+        block: |
+         #rabat
+         app.opt.singleItemDiscounter.active=true
+         app.opt.singleItemDiscounter.calculateAfterEachProduct=true
+      no_log: true
 
     - name: tabele
       shell: |
