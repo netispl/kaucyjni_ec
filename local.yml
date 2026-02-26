@@ -82,6 +82,14 @@
          perl -p -i -e 's;^menu4.el7.image=EC_promolist.png;#menu4.el7.image=EC_promolist.png;' /home/xkasnet/konfiguracja/.local
 
 
+    - name: backup config z timestamp
+      ansible.builtin.copy:
+       src: /home/xkasnet/konfiguracja/.local
+       dest: /home/xkasnet/konfiguracja/.local_{{ ansible_date_time.date }}_{{ ansible_date_time.hour }}-{{ ansible_date_time.minute }}-{{ ansible_date_time.second }}
+       remote_src: true
+       owner: user
+       group: user
+       mode: preserve
 
     - name: config local 
       blockinfile:
