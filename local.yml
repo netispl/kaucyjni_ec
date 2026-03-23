@@ -36,7 +36,7 @@
         state: present
         force: yes
         update_cache: yes
-      when: ver_xkasnet.stdout != '2.2.22r202602021440'
+      when: ver_xkasnet.stdout != '2.2.22r202603180826'
       register: upgrade_xkasnet
       environment: "{{ proxy_env }}"
 
