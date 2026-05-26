@@ -137,6 +137,16 @@
       ignore_errors: yes
 
 
+    - name: backup configa
+      ansible.builtin.copy:
+       src: /home/xkasnet/konfiguracja/.local
+       dest: /root/.local_{{ ansible_date_time.date }}_{{ ansible_date_time.hour }}-{{ ansible_date_time.minute }}-{{ ansible_date_time.second }}
+       remote_src: true
+       owner: user
+       group: user
+       mode: preserve
+
+
     - name: Usuwam .cache
       file:
         state: absent
