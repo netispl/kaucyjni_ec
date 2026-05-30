@@ -30,29 +30,29 @@
     - name:  Instalacja paczek xkasnet bionic
       apt:
         name:
-          - xkasnet-client-2.2.22=2.2.22r202603180826~bionic-1
-          - xkasnet-client-ec-2.2.22=2.2.22r202603180826~bionic-1
-          - xkasnet-libnative-jni-2.2.22=2.2.22r202603180826~bionic-1
+          - xkasnet-client-2.2.22=2.2.22r202605291126~bionic-1
+          - xkasnet-client-ec-2.2.22=2.2.22r202605291126~bionic-1
+          - xkasnet-libnative-jni-2.2.22=2.2.22r202605291126~bionic-1
         state: present
         force: yes
         update_cache: yes
-      when: ver_xkasnet.stdout != '2.2.22r202603180826'
+      when: ver_xkasnet.stdout != '2.2.22r202605291126'
       register: upgrade_xkasnet
       environment: "{{ proxy_env }}"
 
     - name:  Instalacja paczek kasnet bionic
       apt:
         name:
-          - kasnet-config-kasa-2.1.340-m10=2.1.340m10r20251211070736~bionic-1
-          - kasnet-libwaga-kasa-2.1.340-m10=2.1.340m10r20251211070736~bionic-1
-          - kasnet-monitor-kasa-2.1.340-m10=2.1.340m10r20251211070736~bionic-1
-          - kasnet-server-kasa-2.1.340-m10=2.1.340m10r20251211070736~bionic-1
-          - kasnet-src-kasa-2.1.340-m10=2.1.340m10r20251211070736~bionic-1
-          - kasnet-tools-kasa-2.1.340-m10=2.1.340m10r20251211070736~bionic-1
+          - kasnet-config-kasa-2.1.341-m04=2.1.341m04r20260527151412~bionic-1
+          - kasnet-libwaga-kasa-2.1.341-m04=2.1.341m04r20260527151412~bionic-1
+          - kasnet-monitor-kasa-2.1.341-m04=2.1.341m04r20260527151412~bionic-1
+          - kasnet-server-kasa-2.1.341-m04=2.1.341m04r20260527151412~bionic-1
+          - kasnet-src-kasa-2.1.341-m04=2.1.341m04r20260527151412~bionic-1
+          - kasnet-tools-kasa-2.1.341-m04=2.1.341m04r20260527151412~bionic-1
         state: present
         force: yes
         update_cache: yes
-      when: ver_df_daemon.stdout != '2.1.340m10r20251211070736'
+      when: ver_df_daemon.stdout != '2.1.341m04r20260527151412'
       register: upgrade_df_daemon
       environment: "{{ proxy_env }}"
 
